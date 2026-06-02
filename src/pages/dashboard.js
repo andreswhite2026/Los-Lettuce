@@ -2,47 +2,95 @@ import { navigateTo } from "../router/router";
 
 export const dashboardPage = (app) => {
   app.innerHTML = `
-<body>
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-6">
   <div id="app">
-    <div class="flex p-5 bg-slate-900">
-      <form id="saveForm" class="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 text-gray-50">
-        <div class="flex flex-col col-span-1">
-          <label for="fullname">Full Name</label>
-          <input id="fullname" class="border border-slate-200 w-full rounded-md py-1 px-2" type="text"
-            placeholder="Jhon Doe">
-        </div>
-        <div class="flex flex-col col-span-1">
-          <label for="identification">Identification</label>
-          <input id="identification" name="identification" class="border border-slate-200 w-full rounded-md py-1 px-2"
-            type="text" placeholder="Jhon Doe">
-        </div>
-        <div class="flex flex-col col-span-1">
-          <label for="birthdate">Birthdate</label>
-          <input id="birthdate" name="birthdate" class="border border-slate-200 w-full rounded-md py-1 px-2" type="date"
-            placeholder="Jhon Doe">
-        </div>
-        <div class="flex flex-col col-span-1 md:col-span-3">
-          <label for="photo">Photo</label>
-          <input id="photo" name="photo" class="border border-slate-200 rounded-md py-1 px-2" type="text">
-        </div>
-        <div class="flex flex-col col-span-1 md:col-span-3">
-          <label for="description">Description</label>
-          <textarea class="border border-slate-200 rounded-md py-1 px-2" name="description" id="description"></textarea>
-        </div>
-        <div class="flex flex-col items-end col-span-1 md:col-span-3">
-          <button
-            class="w-full md:w-32 bg-emerald-700 hover:bg-emerald-400 hover:text-slate-900 py-2 rounded-md cursor-pointer shadow-sm shadow-zinc-500">Save</button>
-        </div>
-      </form>
-    </div>
-    <div class="flex p-5 bg-slate-800 h-full text-gray-50">
-      <div id="data" class="w-full p-3 text-center grid grid-cols-4 gap-8">
-        
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-white mb-2">
+          Coder Dashboard
+        </h1>
+        <p class="text-slate-400">
+          Manage coders quickly and easily
+        </p>
       </div>
+
+      <div class="flex p-6 bg-slate-800/80 border border-slate-700 rounded-2xl shadow-2xl mb-8">
+        <form id="saveForm" class="grid grid-cols-1 md:grid-cols-3 gap-5 w-full text-gray-50">
+
+          <div class="flex flex-col col-span-1">
+            <label for="fullname" class="mb-2 font-medium">Full Name</label>
+            <input
+              id="fullname"
+              class="bg-slate-900 border border-slate-600 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              type="text"
+              placeholder="John Doe"
+            >
+          </div>
+
+          <div class="flex flex-col col-span-1">
+            <label for="identification" class="mb-2 font-medium">Identification</label>
+            <input
+              id="identification"
+              name="identification"
+              class="bg-slate-900 border border-slate-600 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              type="text"
+              placeholder="123456789"
+            >
+          </div>
+
+          <div class="flex flex-col col-span-1">
+            <label for="birthdate" class="mb-2 font-medium">Birthdate</label>
+            <input
+              id="birthdate"
+              name="birthdate"
+              class="bg-slate-900 border border-slate-600 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              type="date"
+            >
+          </div>
+
+          <div class="flex flex-col col-span-1 md:col-span-3">
+            <label for="photo" class="mb-2 font-medium">Photo</label>
+            <input
+              id="photo"
+              name="photo"
+              class="bg-slate-900 border border-slate-600 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              type="text"
+              placeholder="https://..."
+            >
+          </div>
+
+          <div class="flex flex-col col-span-1 md:col-span-3">
+            <label for="description" class="mb-2 font-medium">Description</label>
+            <textarea
+              class="bg-slate-900 border border-slate-600 rounded-xl py-3 px-4 text-white resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              name="description"
+              id="description"
+              rows="4"
+              placeholder="Write a description..."
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col items-end col-span-1 md:col-span-3">
+            <button
+              class="w-full md:w-40 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 py-3 rounded-xl font-bold text-white cursor-pointer transition-all duration-300 shadow-lg shadow-cyan-900"
+            >
+              Save 🚀
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="flex p-5 bg-slate-800/50 border border-slate-700 rounded-2xl text-gray-50">
+        <div id="data" class="w-full p-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        </div>
+      </div>
+
     </div>
   </div>
-</body> 
-  `;
+</div>
+`;
 
 async function postData(data) {
   const response = await fetch("http://localhost:3000/coders", {

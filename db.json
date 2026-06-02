@@ -1,5 +1,13 @@
 {
-  "user": [],
+  "user": [
+    {
+      "name": "Andres",
+      "email": "andres@gmail.com",
+      "password": "1234",
+      "role": "user",
+      "id": "XaEIAUKVvoY"
+    }
+  ],
   "coders": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
