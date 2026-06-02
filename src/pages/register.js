@@ -8,11 +8,11 @@ export const registerPage = (app) => {
     <div class="bg-slate-800 w-full max-w-xl rounded-2xl p-6 shadow-2xl">
 
       <h1 class="text-3xl font-bold text-white mb-4 text-center">
-        LOGIN
+        REGISTER
       </h1>
 
       <form id="formulation">
-        
+
         <input
           type="email"
           id="inputGmail"
@@ -31,9 +31,10 @@ export const registerPage = (app) => {
 
         <div class="flex justify-center">
           <button
+            type="submit"
             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl"
           >
-            Login
+            Register
           </button>
         </div>
 
@@ -53,34 +54,46 @@ export const registerPage = (app) => {
     const email = document.querySelector("#inputGmail").value;
     const password = document.querySelector("#inputPassword").value;
 
-    const userData = {
-      email,
-      password
-    };
-
     try {
+      // Verificar si el correo ya existe
+      const checkRes = await fetch(`${API}?email=${email}`);
+      const existingUser = await checkRes.json();
+
+      if (existingUser.length > 0) {
+        document.querySelector("#mensaje").textContent =
+          "Este correo ya está registrado";
+        return;
+      }
+
+      const newUser = {
+        email,
+        password
+      };
+
       const res = await fetch(API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(newUser)
       });
 
-      if (!res.ok) throw new Error("Error al guardar usuario");
-
-      const data = await res.json();
+      if (!res.ok) {
+        throw new Error("Error al registrar");
+      }
 
       document.querySelector("#mensaje").textContent =
-        "Usuario guardado correctamente";
+        "Usuario registrado correctamente";
 
       setTimeout(() => {
-        navigateTo("/dashboard");
+        navigateTo("/");
       }, 1000);
 
     } catch (error) {
       document.querySelector("#mensaje").textContent =
         "Error al registrar usuario";
+
+      console.error(error);
     }
   });
 };
