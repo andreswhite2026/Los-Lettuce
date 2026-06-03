@@ -86,7 +86,7 @@ export const dashboardPage = (app) => {
             <button
               class="w-full md:w-40 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 py-3 rounded-xl font-bold text-white cursor-pointer transition-all duration-300 shadow-lg shadow-cyan-900"
             >
-              Save 🚀
+              Save 
             </button>
           </div>
 
@@ -191,7 +191,7 @@ form.addEventListener("submit", async (event) => {
 
   await postData(data);
 
-  await renderData(); // ← refresca las tarjetas
+  await renderData(); 
 
   console.log("Guardado correctamente");
   });
