@@ -6,13 +6,24 @@ export const dashboardPage = (app) => {
   <div id="app">
     <div class="max-w-6xl mx-auto">
 
-      <div class="text-center mb-8">
-        <h1 class="text-4xl font-bold text-white mb-2">
-          Coder Dashboard
-        </h1>
-        <p class="text-slate-400">
-          Manage coders quickly and easily
-        </p>
+      <div class="relative mb-8">
+
+        <div class="text-center">
+          <h1 class="text-4xl font-bold text-white mb-2">
+            Coder Dashboard
+          </h1>
+          <p class="text-slate-400">
+            Manage coders quickly and easily
+          </p>
+        </div>
+
+        <button
+          id="logoutBtn"
+          class="absolute top-0 right-0 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl font-semibold transition"
+        >
+          Log Out
+        </button>
+
       </div>
 
       <div class="flex p-6 bg-slate-800/80 border border-slate-700 rounded-2xl shadow-2xl mb-8">
@@ -108,12 +119,24 @@ async function renderData() {
   const response = await fetch("http://localhost:3000/coders");
   const data = await response.json();
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  const myCoders = data.filter(
+    coder => coder.userId === currentUser.id
+  );
+
   const dataContainer = document.getElementById("data");
 
   dataContainer.innerHTML = "";
 
-  data.forEach((element) => {
-    const { fullname, photo, identification, description, birthdate } = element;
+  myCoders.forEach((element) => {
+    const {
+      fullname,
+      photo,
+      identification,
+      description,
+      birthdate
+    } = element;
 
     dataContainer.innerHTML += `
       <div class="bg-purple-400/80 flex flex-col items-center justify-center text-gray-200 rounded-md shadow-md p-3">
@@ -128,6 +151,15 @@ async function renderData() {
 }
 
 renderData();
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  const confirmLogout = confirm("¿Deseas cerrar sesión?");
+
+  if (confirmLogout) {
+    localStorage.removeItem("user");
+    navigateTo("/");
+  }
+});
 
 const form = document.getElementById("saveForm");
 
@@ -145,12 +177,16 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   const data = {
     fullname,
     identification,
     birthdate,
     photo,
-    description
+    description,
+    userId: currentUser.id,
+    createdBy: currentUser.name
   };
 
   await postData(data);

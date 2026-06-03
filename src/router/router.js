@@ -20,6 +20,31 @@ export const router = async () => {
 
   const path = window.location.pathname;
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // Usuario NO autenticado
+  if (!user) {
+    if (path === "/dashboard" || path === "/admin") {
+      navigateTo("/");
+      return;
+    }
+  }
+
+  // Usuario autenticado
+  if (user) {
+    // User intentando entrar al panel admin
+    if (user.role === "user" && path === "/admin") {
+      navigateTo("/dashboard");
+      return;
+    }
+
+    // Admin intentando entrar al dashboard user
+    if (user.role === "admin" && path === "/dashboard") {
+      navigateTo("/admin");
+      return;
+    }
+  }
+
   const page = routes[path];
 
   if (!page) {

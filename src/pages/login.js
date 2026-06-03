@@ -67,6 +67,12 @@ export const loginPage = (app) => {
     msg.textContent = "Success";
     msg.className = "text-center mt-4 text-green-400 text-sm";
 
-    setTimeout(() => navigateTo("/dashboard"), 500);
+    setTimeout(() => {
+      if (user.role === "admin") {
+        navigateTo("/admin");
+      } else {
+        navigateTo("/dashboard");
+      }
+    }, 500);
   });
 };

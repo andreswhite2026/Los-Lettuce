@@ -25,6 +25,12 @@ export const registerPage = (app) => {
         <input id="confirmPassword" type="password" placeholder="Confirm password"
           class="w-full p-3 rounded-lg bg-[#0b1220] border border-[#22304d] text-white placeholder-slate-500 focus:outline-none focus:border-slate-400">
 
+        <select id="role" 
+          class="w-full p-3 rounded-lg bg-[#0b1220] border border-[#22304d] text-white focus:outline-none focus:border-slate-400">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+
         <button class="w-full bg-slate-200 hover:bg-white text-black font-medium p-3 rounded-lg transition">
           Create account
         </button>
@@ -56,6 +62,7 @@ export const registerPage = (app) => {
     const email = document.querySelector("#email").value.trim();
     const password = document.querySelector("#password").value;
     const confirmPassword = document.querySelector("#confirmPassword").value;
+    const role = document.querySelector("#role").value;  
 
     const msg = document.querySelector("#msg");
 
@@ -74,7 +81,7 @@ export const registerPage = (app) => {
     const res = await fetch(API);
     const users = await res.json();
 
-    if (users.find(u => u.email === email)) {
+    if (users.find((u) => u.email === email)) {
       msg.textContent = "Email already exists";
       msg.className = "text-center mt-4 text-red-400 text-sm";
       return;
@@ -87,8 +94,8 @@ export const registerPage = (app) => {
         name,
         email,
         password,
-        role: "user"
-      })
+        role: role,
+      }),
     });
 
     msg.textContent = "Account created";
