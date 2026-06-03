@@ -151,6 +151,18 @@ export const adminPage = (app) => {
   loadAllCoders();
   setupDelete();
   setupEdit();
+
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+  const value = e.target.value.toLowerCase();
+
+  const filtered = allCoders.filter(coder =>
+    coder.fullname.toLowerCase().includes(value) ||
+    coder.identification.toLowerCase().includes(value) ||
+    coder.createdBy.toLowerCase().includes(value)
+  );
+
+  renderCoders(filtered);
+});
 };
 
 
